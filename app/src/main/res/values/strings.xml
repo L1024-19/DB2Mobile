@@ -10,5 +10,20 @@
     <string name="name">Name</string>
     <string name="phone">Phone</string>
     <string name="submit">Submit</string>
-    <string name="parentRegisterPage">Parent Register Page</string>
+    <string name="parentEmail">Parent\'s Email</string>
+    <string-array name="grade">
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+    </string-array>
+    <string-array name="role">
+        <item>None</item>
+        <item>Mentor</item>
+        <item>Mentee</item>
+        <item>Both</item>
+    </string-array>
 </resources>

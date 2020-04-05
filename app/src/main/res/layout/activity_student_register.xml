@@ -30,7 +30,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/parentRegister"
+                android:text="@string/studentRegister"
                 android:textSize="24sp" />
 
             <EditText
@@ -64,6 +64,24 @@
                 android:ems="10"
                 android:hint="@string/phone"
                 android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/parentEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/parentEmail"
+                android:inputType="textPersonName" />
+
+            <Spinner
+                android:id="@+id/grade"
+                android:layout_width="match_parent"
+                android:layout_height="42dp" />
+
+            <Spinner
+                android:id="@+id/role"
+                android:layout_width="match_parent"
+                android:layout_height="42dp" />
 
             <Button
                 android:id="@+id/submit"

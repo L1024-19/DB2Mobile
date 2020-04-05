@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         });
         studentRegister.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent next = new Intent(getApplicationContext(), DisplayEmails.class);
+                Intent next = new Intent(getApplicationContext(), StudentRegister.class);
                 startActivity(next);
             }
         });

@@ -53,10 +53,4 @@
 
     // close connection
     mysqli_close($myconnection);
-    $users = array(); 
-    array_push($users, $_POST['email']);
-    array_push($users, $_POST['password']);
-    array_push($users, $_POST['name']);
-    array_push($users, $_POST['phone']);
-    echo json_encode($users);
 ?>
