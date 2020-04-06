@@ -84,7 +84,7 @@
                 android:layout_height="42dp" />
 
             <Button
-                android:id="@+id/submit"
+                android:id="@+id/updateParentInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/submit" />

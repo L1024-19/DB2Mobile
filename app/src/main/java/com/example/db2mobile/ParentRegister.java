@@ -25,7 +25,7 @@ public class ParentRegister extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent_register);
-        submit = (Button) findViewById(R.id.submit);
+        submit = (Button) findViewById(R.id.updateParentInfo);
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getJSON("http://192.168.0.21/DB2Mobile/php/ParentRegister.php");

@@ -10,10 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.InputStreamReader;
@@ -23,19 +19,20 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
-public class ParentSignIn extends AppCompatActivity {
+public class UpdateParentInfo extends AppCompatActivity {
 
-    EditText email, password;
+    EditText email, password, name, phone;
     Button submit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parent_sign_in);
+        setContentView(R.layout.activity_update_parent_info);
         submit = (Button) findViewById(R.id.updateParentInfo);
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getJSON("http://192.168.0.21/DB2Mobile/php/ParentSignIn.php");
+                getJSON("http://192.168.0.21/DB2Mobile/php/UpdateParentInfo.php");
             }
         });
     }
@@ -43,15 +40,19 @@ public class ParentSignIn extends AppCompatActivity {
     private void getJSON(final String urlWebService) {
         class GetJSON extends AsyncTask<Void, Void, String> {
 
-            String saveEmail, savePassword;
+            String saveEmail, savePassword, saveName, savePhone;
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
                 email = (EditText) findViewById(R.id.email);
                 password = (EditText) findViewById(R.id.password);
+                name = (EditText) findViewById(R.id.name);
+                phone = (EditText) findViewById(R.id.phone);
                 saveEmail = email.getText().toString();
                 savePassword = password.getText().toString();
+                saveName = name.getText().toString();
+                savePhone = phone.getText().toString();
             }
 
             @Override
@@ -60,8 +61,13 @@ public class ParentSignIn extends AppCompatActivity {
                     URL url = new URL(urlWebService);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     HashMap<String, String> params = new HashMap<>();
-                    params.put("parentemail", saveEmail);
-                    params.put("parentpassword", savePassword);
+                    params.put("email", saveEmail);
+                    params.put("password", savePassword);
+                    params.put("name", saveName);
+                    params.put("phone", savePhone);
+                    SharedPreferences preferences = getSharedPreferences("Info", MODE_PRIVATE);
+                    int id = preferences.getInt("user_id", -1);
+                    params.put("user_id", Integer.toString(id));
                     StringBuilder sbParams = new StringBuilder();
                     int i = 0;
                     for (String key : params.keySet()) {
@@ -87,13 +93,7 @@ public class ParentSignIn extends AppCompatActivity {
                     wr.close();
                     // runs the php code and gets JSON from it
                     con.getInputStream();
-                    StringBuilder sb = new StringBuilder();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    String json;
-                    while ((json = bufferedReader.readLine()) != null) {
-                        sb.append(json + "\n");
-                    }
-                    return sb.toString().trim();
+                    return "Success";
                 }
                 catch (Exception e) {
                     return null;
@@ -103,27 +103,11 @@ public class ParentSignIn extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                try {
-                    login(s);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Intent next = new Intent(getApplicationContext(), ParentDashboard.class);
+                startActivity(next);
             }
         }
         GetJSON getJSON = new GetJSON();
         getJSON.execute();
-    }
-
-    private void login(String json) throws JSONException {
-        JSONArray jsonArray = new JSONArray(json);
-        String user;
-        JSONObject obj = jsonArray.getJSONObject(0);
-        user = obj.getString("user_id");
-        SharedPreferences preferences = getSharedPreferences("Info", MODE_PRIVATE);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt("user_id", Integer.parseInt(user));
-        editor.apply();
-        Intent next = new Intent(getApplicationContext(), ParentDashboard.class);
-        startActivity(next);
     }
 }

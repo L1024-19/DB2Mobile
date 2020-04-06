@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ParentDashboard"></activity>
+        <activity android:name=".UpdateParentInfo"></activity>
+        <activity android:name=".ParentDashboard" />
         <activity android:name=".ParentSignIn" />
         <activity android:name=".StudentRegister" />
         <activity android:name=".ParentRegister" />

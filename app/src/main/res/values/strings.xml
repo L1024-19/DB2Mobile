@@ -26,4 +26,7 @@
         <item>Mentee</item>
         <item>Both</item>
     </string-array>
+    <string name="updateParentInfo">Update Parent Info</string>
+    <string name="updateStudentInfo">Update Student Info</string>
+    <string name="logout">Logout</string>
 </resources>

@@ -36,7 +36,7 @@ public class StudentRegister extends AppCompatActivity {
         ArrayAdapter<CharSequence> roleAdapter = ArrayAdapter.createFromResource(this, R.array.role, android.R.layout.simple_spinner_item);
         roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         role.setAdapter(roleAdapter);
-        submit = (Button) findViewById(R.id.submit);
+        submit = (Button) findViewById(R.id.updateParentInfo);
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 getJSON("http://192.168.0.21/DB2Mobile/php/StudentRegister.php");
