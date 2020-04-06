@@ -41,7 +41,7 @@ public class ParentDashboard extends AppCompatActivity {
         });
         logout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent next = new Intent(getApplicationContext(), DisplayEmails.class);
+                Intent next = new Intent(getApplicationContext(), Logout.class);
                 startActivity(next);
             }
         });
