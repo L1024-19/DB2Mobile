@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         });
         parentSignIn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent next = new Intent(getApplicationContext(), DisplayEmails.class);
+                Intent next = new Intent(getApplicationContext(), ParentSignIn.class);
                 startActivity(next);
             }
         });

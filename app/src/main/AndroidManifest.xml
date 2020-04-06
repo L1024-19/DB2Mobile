@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".StudentRegister"></activity>
+        <activity android:name=".ParentDashboard"></activity>
+        <activity android:name=".ParentSignIn" />
+        <activity android:name=".StudentRegister" />
         <activity android:name=".ParentRegister" />
         <activity android:name=".DisplayEmails" />
         <activity android:name=".MainActivity">
