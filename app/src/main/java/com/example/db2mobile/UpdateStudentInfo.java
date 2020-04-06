@@ -7,9 +7,10 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-
+import android.widget.Spinner;
 import java.io.DataOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -17,20 +18,28 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
-public class UpdateParentInfo extends AppCompatActivity {
+public class UpdateStudentInfo extends AppCompatActivity {
 
-    EditText email, password, name, phone;
+    EditText oldStudentEmail, newStudentEmail, oldStudentPassword, newStudentPassword, name, phone;
     Button submit;
-
+    Spinner grade, role;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_update_parent_info);
-        submit = (Button) findViewById(R.id.updateParentInfo);
+        setContentView(R.layout.activity_update_student_info);
+        grade = (Spinner) findViewById(R.id.grade);
+        ArrayAdapter<CharSequence> gradeAdapter = ArrayAdapter.createFromResource(this, R.array.grade, android.R.layout.simple_spinner_item);
+        gradeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        grade.setAdapter(gradeAdapter);
+        role = (Spinner) findViewById(R.id.role);
+        ArrayAdapter<CharSequence> roleAdapter = ArrayAdapter.createFromResource(this, R.array.role, android.R.layout.simple_spinner_item);
+        roleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        role.setAdapter(roleAdapter);
+        submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getJSON("http://192.168.0.21/DB2Mobile/php/UpdateParentInfo.php");
+                getJSON("http://192.168.0.21/DB2Mobile/php/UpdateStudentInfo.php");
             }
         });
     }
@@ -38,19 +47,27 @@ public class UpdateParentInfo extends AppCompatActivity {
     private void getJSON(final String urlWebService) {
         class GetJSON extends AsyncTask<Void, Void, String> {
 
-            String saveEmail, savePassword, saveName, savePhone;
+            String saveOldStudentEmail, saveNewStudentEmail, saveOldStudentPassword, saveNewStudentPassword, saveName, savePhone, saveGrade, saveRole;
 
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                email = (EditText) findViewById(R.id.email);
-                password = (EditText) findViewById(R.id.password);
+                oldStudentEmail = (EditText) findViewById(R.id.oldStudentEmail);
+                newStudentEmail = (EditText) findViewById(R.id.newStudentEmail);
+                oldStudentPassword = (EditText) findViewById(R.id.oldStudentPassword);
+                newStudentPassword = (EditText) findViewById(R.id.newStudentPassword);
                 name = (EditText) findViewById(R.id.name);
                 phone = (EditText) findViewById(R.id.phone);
-                saveEmail = email.getText().toString();
-                savePassword = password.getText().toString();
+                grade = (Spinner)findViewById(R.id.grade);
+                role = (Spinner)findViewById(R.id.role);
+                saveOldStudentEmail = oldStudentEmail.getText().toString();
+                saveNewStudentEmail = newStudentEmail.getText().toString();
+                saveOldStudentPassword = oldStudentPassword.getText().toString();
+                saveNewStudentPassword = newStudentPassword.getText().toString();
                 saveName = name.getText().toString();
                 savePhone = phone.getText().toString();
+                saveGrade = grade.getSelectedItem().toString();
+                saveRole = role.getSelectedItem().toString();
             }
 
             @Override
@@ -59,10 +76,14 @@ public class UpdateParentInfo extends AppCompatActivity {
                     URL url = new URL(urlWebService);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     HashMap<String, String> params = new HashMap<>();
-                    params.put("email", saveEmail);
-                    params.put("password", savePassword);
-                    params.put("name", saveName);
-                    params.put("phone", savePhone);
+                    params.put("oldemail", saveOldStudentEmail);
+                    params.put("newemail", saveNewStudentEmail);
+                    params.put("oldpassword", saveOldStudentPassword);
+                    params.put("newpassword", saveNewStudentPassword);
+                    params.put("newname", saveName);
+                    params.put("newphone", savePhone);
+                    params.put("newgrade", saveGrade);
+                    params.put("newrole", saveRole);
                     SharedPreferences preferences = getSharedPreferences("Info", MODE_PRIVATE);
                     int id = preferences.getInt("user_id", -1);
                     params.put("user_id", Integer.toString(id));

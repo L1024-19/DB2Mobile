@@ -35,7 +35,7 @@ public class ParentDashboard extends AppCompatActivity {
         });
         updateStudentInfo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent next = new Intent(getApplicationContext(), DisplayEmails.class);
+                Intent next = new Intent(getApplicationContext(), UpdateStudentInfo.class);
                 startActivity(next);
             }
         });

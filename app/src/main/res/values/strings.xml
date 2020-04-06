@@ -29,4 +29,11 @@
     <string name="updateParentInfo">Update Parent Info</string>
     <string name="updateStudentInfo">Update Student Info</string>
     <string name="logout">Logout</string>
+    <string name="oldStudentEmail">Old Student Email</string>
+    <string name="newStudentEmail">New Student Email</string>
+    <string name="oldStudentPassword">Old Student Password</string>
+    <string name="newStudentPassword">New Student Password</string>
+    <string name="newStudentName">New Student Name</string>
+    <string name="newStudentPhone">New Student Phone</string>
+    <string name="newStudentGrade">New Student Grade</string>
 </resources>
