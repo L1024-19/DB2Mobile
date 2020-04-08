@@ -4,19 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ParentRegister">
+    tools:context=".EnrollTeach">
 
     <ScrollView
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:isScrollContainer="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:id="@+id/layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -26,27 +24,24 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/idDisplay"
+                android:id="@+id/className"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="24sp" />
 
             <Button
-                android:id="@+id/updateStudentInfo"
+                android:id="@+id/enroll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/updateStudentInfo" />
+                android:text="@string/enroll" />
 
             <Button
-                android:id="@+id/viewSections"
+                android:id="@+id/teach"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/viewSections" />
-
-            <Button
-                android:id="@+id/logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/logout" />
+                android:text="@string/teach" />
         </LinearLayout>
+
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

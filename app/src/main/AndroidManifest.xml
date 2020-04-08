@@ -12,7 +12,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".StudentUpdateStudentInfo"></activity>
+        <activity android:name=".Teach"></activity>
+        <activity android:name=".Enroll" />
+        <activity android:name=".EnrollTeach" />
+        <activity android:name=".StudentSection" />
+        <activity android:name=".StudentUpdateStudentInfo" />
         <activity android:name=".StudentDashboard" />
         <activity android:name=".StudentSignIn" />
         <activity android:name=".Logout" />

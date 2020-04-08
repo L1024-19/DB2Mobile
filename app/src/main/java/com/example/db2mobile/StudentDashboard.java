@@ -12,6 +12,7 @@ import android.widget.TextView;
 public class StudentDashboard extends AppCompatActivity {
 
     Button updateStudentInfo;
+    Button viewSections;
     Button logout;
     TextView idDisplay;
 
@@ -24,10 +25,17 @@ public class StudentDashboard extends AppCompatActivity {
         idDisplay = findViewById(R.id.idDisplay);
         idDisplay.setText(String.valueOf(id));
         updateStudentInfo = findViewById(R.id.updateStudentInfo);
+        viewSections = findViewById(R.id.viewSections);
         logout = findViewById(R.id.logout);
         updateStudentInfo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent next = new Intent(getApplicationContext(), StudentUpdateStudentInfo.class);
+                startActivity(next);
+            }
+        });
+        viewSections.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent next = new Intent(getApplicationContext(), StudentSection.class);
                 startActivity(next);
             }
         });
