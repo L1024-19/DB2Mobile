@@ -23,7 +23,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
-public class ParentSignIn extends AppCompatActivity {
+public class StudentSignIn extends AppCompatActivity {
 
     EditText email, password;
     Button submit;
@@ -31,11 +31,11 @@ public class ParentSignIn extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_parent_sign_in);
+        setContentView(R.layout.activity_student_sign_in);
         submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getJSON("http://192.168.0.21/DB2Mobile/php/ParentSignIn.php");
+                getJSON("http://192.168.0.21/DB2Mobile/php/StudentSignIn.php");
             }
         });
     }
@@ -60,8 +60,8 @@ public class ParentSignIn extends AppCompatActivity {
                     URL url = new URL(urlWebService);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     HashMap<String, String> params = new HashMap<>();
-                    params.put("parentemail", saveEmail);
-                    params.put("parentpassword", savePassword);
+                    params.put("studentemail", saveEmail);
+                    params.put("studentpassword", savePassword);
                     StringBuilder sbParams = new StringBuilder();
                     int i = 0;
                     for (String key : params.keySet()) {
@@ -123,7 +123,7 @@ public class ParentSignIn extends AppCompatActivity {
         SharedPreferences.Editor editor = preferences.edit();
         editor.putInt("user_id", Integer.parseInt(user));
         editor.apply();
-        Intent next = new Intent(getApplicationContext(), ParentDashboard.class);
+        Intent next = new Intent(getApplicationContext(), StudentDashboard.class);
         startActivity(next);
     }
 }

@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         });
         studentSignIn.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent next = new Intent(getApplicationContext(), DisplayEmails.class);
+                Intent next = new Intent(getApplicationContext(), StudentSignIn.class);
                 startActivity(next);
             }
         });

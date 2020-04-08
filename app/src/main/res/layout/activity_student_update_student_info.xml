@@ -30,24 +30,66 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/parentSignIn"
+                android:text="@string/updateStudentInfo"
                 android:textSize="24sp" />
 
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/oldStudentEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/email"
+                android:hint="@string/oldStudentEmail"
                 android:inputType="textPersonName" />
 
             <EditText
-                android:id="@+id/password"
+                android:id="@+id/newStudentEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/password"
+                android:hint="@string/newStudentEmail"
                 android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/oldStudentPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/oldStudentPassword"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/newStudentPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/newStudentPassword"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/newStudentName"
+                android:inputType="textPersonName" />
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="@string/newStudentPhone"
+                android:inputType="textPersonName" />
+
+            <Spinner
+                android:id="@+id/grade"
+                android:layout_width="match_parent"
+                android:layout_height="42dp" />
+
+            <Spinner
+                android:id="@+id/role"
+                android:layout_width="match_parent"
+                android:layout_height="42dp" />
 
             <Button
                 android:id="@+id/submit"

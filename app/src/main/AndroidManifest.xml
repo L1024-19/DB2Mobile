@@ -12,7 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Logout"></activity>
+        <activity android:name=".StudentUpdateStudentInfo"></activity>
+        <activity android:name=".StudentDashboard" />
+        <activity android:name=".StudentSignIn" />
+        <activity android:name=".Logout" />
         <activity android:name=".UpdateStudentInfo" />
         <activity android:name=".UpdateParentInfo" />
         <activity android:name=".ParentDashboard" />
