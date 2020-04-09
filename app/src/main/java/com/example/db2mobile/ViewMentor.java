@@ -24,16 +24,16 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 
-public class StudentSection extends AppCompatActivity {
+public class ViewMentor extends AppCompatActivity {
 
     ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_section);
+        setContentView(R.layout.activity_view_mentor);
         listView = (ListView) findViewById(R.id.listView);
-        getJSON("http://192.168.0.21/DB2Mobile/php/StudentSection.php");
+        getJSON("http://192.168.0.21/DB2Mobile/php/MentorList.php");
     }
 
     private void getJSON(final String urlWebService) {
@@ -91,7 +91,6 @@ public class StudentSection extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                // Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 try {
                     loadIntoListView(s);
                 } catch (JSONException e) {
@@ -105,18 +104,18 @@ public class StudentSection extends AppCompatActivity {
 
     private void loadIntoListView(String json) throws JSONException {
         JSONArray jsonArray = new JSONArray(json);
-        String[] classNames = new String[jsonArray.length()];
+        String[] classes = new String[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-            classNames[i] = obj.getString("meet_name");
+            classes[i] = obj.getString("meet_name");
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, classNames);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, classes);
         listView.setAdapter(arrayAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String clickedItem = (String) parent.getItemAtPosition(position);
-                Intent next = new Intent(getApplicationContext(), EnrollTeach.class);
+                Intent next = new Intent(getApplicationContext(), Names.class);
                 next.putExtra("className", clickedItem);
                 startActivity(next);
             }

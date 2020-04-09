@@ -43,6 +43,12 @@
                 android:text="@string/viewSections" />
 
             <Button
+                android:id="@+id/viewMentor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/viewMentor" />
+
+            <Button
                 android:id="@+id/logout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

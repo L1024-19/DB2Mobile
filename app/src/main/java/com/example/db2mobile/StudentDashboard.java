@@ -13,6 +13,7 @@ public class StudentDashboard extends AppCompatActivity {
 
     Button updateStudentInfo;
     Button viewSections;
+    Button viewMentor;
     Button logout;
     TextView idDisplay;
 
@@ -26,6 +27,7 @@ public class StudentDashboard extends AppCompatActivity {
         idDisplay.setText(String.valueOf(id));
         updateStudentInfo = findViewById(R.id.updateStudentInfo);
         viewSections = findViewById(R.id.viewSections);
+        viewMentor = findViewById(R.id.viewMentor);
         logout = findViewById(R.id.logout);
         updateStudentInfo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -36,6 +38,12 @@ public class StudentDashboard extends AppCompatActivity {
         viewSections.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent next = new Intent(getApplicationContext(), StudentSection.class);
+                startActivity(next);
+            }
+        });
+        viewMentor.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent next = new Intent(getApplicationContext(), ViewMentor.class);
                 startActivity(next);
             }
         });

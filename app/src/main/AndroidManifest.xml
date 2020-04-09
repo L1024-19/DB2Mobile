@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Teach"></activity>
+        <activity android:name=".Names"></activity>
+        <activity android:name=".ViewMentor" />
+        <activity android:name=".Teach" />
         <activity android:name=".Enroll" />
         <activity android:name=".EnrollTeach" />
         <activity android:name=".StudentSection" />

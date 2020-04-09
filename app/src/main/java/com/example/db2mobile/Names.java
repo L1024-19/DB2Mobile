@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -22,18 +23,22 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class StudentSection extends AppCompatActivity {
+public class Names extends AppCompatActivity {
 
+    String className;
     ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_section);
+        setContentView(R.layout.activity_names);
         listView = (ListView) findViewById(R.id.listView);
-        getJSON("http://192.168.0.21/DB2Mobile/php/StudentSection.php");
+        getJSON("http://192.168.0.21/DB2Mobile/php/Names.php");
     }
 
     private void getJSON(final String urlWebService) {
@@ -42,6 +47,7 @@ public class StudentSection extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                className = getIntent().getStringExtra("className");
             }
 
             @Override
@@ -53,6 +59,7 @@ public class StudentSection extends AppCompatActivity {
                     SharedPreferences preferences = getSharedPreferences("Info", MODE_PRIVATE);
                     int id = preferences.getInt("user_id", -1);
                     params.put("user_id", Integer.toString(id));
+                    params.put("className", className);
                     StringBuilder sbParams = new StringBuilder();
                     int i = 0;
                     for (String key : params.keySet()) {
@@ -91,7 +98,6 @@ public class StudentSection extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                // Toast.makeText(getApplicationContext(), s, Toast.LENGTH_SHORT).show();
                 try {
                     loadIntoListView(s);
                 } catch (JSONException e) {
@@ -105,21 +111,18 @@ public class StudentSection extends AppCompatActivity {
 
     private void loadIntoListView(String json) throws JSONException {
         JSONArray jsonArray = new JSONArray(json);
-        String[] classNames = new String[jsonArray.length()];
+        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-            classNames[i] = obj.getString("meet_name");
+            Map<String, String> datum = new HashMap<String, String>(2);
+            datum.put("Name", obj.getString("name"));
+            datum.put("Email", obj.getString("email"));
+            data.add(datum);
         }
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, classNames);
-        listView.setAdapter(arrayAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String clickedItem = (String) parent.getItemAtPosition(position);
-                Intent next = new Intent(getApplicationContext(), EnrollTeach.class);
-                next.putExtra("className", clickedItem);
-                startActivity(next);
-            }
-        });
+        SimpleAdapter adapter = new SimpleAdapter(this, data,
+                android.R.layout.simple_list_item_2,
+                new String[] {"Name", "Email" },
+                new int[] {android.R.id.text1, android.R.id.text2 });
+        listView.setAdapter(adapter);
     }
 }
