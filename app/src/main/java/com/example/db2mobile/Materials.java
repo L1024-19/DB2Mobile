@@ -2,9 +2,13 @@ package com.example.db2mobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -24,17 +28,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Names extends AppCompatActivity {
+public class Materials extends AppCompatActivity {
 
     String className;
     ListView listView;
+    ArrayList<String> materialIdArray = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_names);
+        setContentView(R.layout.activity_materials);
         listView = (ListView) findViewById(R.id.listView);
-        getJSON("http://192.168.0.21/DB2Mobile/php/Names.php");
+        getJSON("http://192.168.0.21/DB2Mobile/php/Materials.php");
     }
 
     private void getJSON(final String urlWebService) {
@@ -107,18 +112,23 @@ public class Names extends AppCompatActivity {
 
     private void loadIntoListView(String json) throws JSONException {
         JSONArray jsonArray = new JSONArray(json);
-        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+        String[] titles = new String[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-            Map<String, String> datum = new HashMap<String, String>(2);
-            datum.put("Name", obj.getString("name"));
-            datum.put("Email", obj.getString("email"));
-            data.add(datum);
+            titles[i] = obj.getString("title");
+            materialIdArray.add(obj.getString("material_id"));
         }
-        SimpleAdapter adapter = new SimpleAdapter(this, data,
-                android.R.layout.simple_list_item_2,
-                new String[] {"Name", "Email" },
-                new int[] {android.R.id.text1, android.R.id.text2 });
-        listView.setAdapter(adapter);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, titles);
+        listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String clickedItem = (String) parent.getItemAtPosition(position);
+                Intent next = new Intent(getApplicationContext(), Materialinfo.class);
+                Integer selectionID = Integer.parseInt(materialIdArray.get(position));
+                next.putExtra("material_id", selectionID.toString());
+                startActivity(next);
+            }
+        });
     }
 }

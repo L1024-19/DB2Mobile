@@ -2,11 +2,14 @@ package com.example.db2mobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,22 +22,18 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-public class Names extends AppCompatActivity {
+public class ViewMentee extends AppCompatActivity {
 
-    String className;
     ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_names);
+        setContentView(R.layout.activity_view_mentee);
         listView = (ListView) findViewById(R.id.listView);
-        getJSON("http://192.168.0.21/DB2Mobile/php/Names.php");
+        getJSON("http://192.168.0.21/DB2Mobile/php/MenteeList.php");
     }
 
     private void getJSON(final String urlWebService) {
@@ -43,7 +42,6 @@ public class Names extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                className = getIntent().getStringExtra("className");
             }
 
             @Override
@@ -55,7 +53,6 @@ public class Names extends AppCompatActivity {
                     SharedPreferences preferences = getSharedPreferences("Info", MODE_PRIVATE);
                     int id = preferences.getInt("user_id", -1);
                     params.put("user_id", Integer.toString(id));
-                    params.put("className", className);
                     StringBuilder sbParams = new StringBuilder();
                     int i = 0;
                     for (String key : params.keySet()) {
@@ -107,18 +104,21 @@ public class Names extends AppCompatActivity {
 
     private void loadIntoListView(String json) throws JSONException {
         JSONArray jsonArray = new JSONArray(json);
-        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
+        String[] classes = new String[jsonArray.length()];
         for (int i = 0; i < jsonArray.length(); i++) {
             JSONObject obj = jsonArray.getJSONObject(i);
-            Map<String, String> datum = new HashMap<String, String>(2);
-            datum.put("Name", obj.getString("name"));
-            datum.put("Email", obj.getString("email"));
-            data.add(datum);
+            classes[i] = obj.getString("meet_name");
         }
-        SimpleAdapter adapter = new SimpleAdapter(this, data,
-                android.R.layout.simple_list_item_2,
-                new String[] {"Name", "Email" },
-                new int[] {android.R.id.text1, android.R.id.text2 });
-        listView.setAdapter(adapter);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, classes);
+        listView.setAdapter(arrayAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String clickedItem = (String) parent.getItemAtPosition(position);
+                Intent next = new Intent(getApplicationContext(), Materials.class);
+                next.putExtra("className", clickedItem);
+                startActivity(next);
+            }
+        });
     }
 }

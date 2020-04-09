@@ -2,11 +2,14 @@ package com.example.db2mobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -19,22 +22,19 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-public class Names extends AppCompatActivity {
+public class Materialinfo extends AppCompatActivity {
 
-    String className;
-    ListView listView;
+    String materialId;
+    TextView title, author, type, url, assignedDate, notes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_names);
-        listView = (ListView) findViewById(R.id.listView);
-        getJSON("http://192.168.0.21/DB2Mobile/php/Names.php");
+        setContentView(R.layout.activity_materialinfo);
+        materialId = getIntent().getStringExtra("material_id");
+        getJSON("http://192.168.0.21/DB2Mobile/php/MaterialInfo.php");
     }
 
     private void getJSON(final String urlWebService) {
@@ -43,7 +43,12 @@ public class Names extends AppCompatActivity {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
-                className = getIntent().getStringExtra("className");
+                title = findViewById(R.id.title);
+                author = findViewById(R.id.author);
+                type = findViewById(R.id.type);
+                url = findViewById(R.id.url);
+                assignedDate = findViewById(R.id.assignedDate);
+                notes = findViewById(R.id.notes);
             }
 
             @Override
@@ -55,7 +60,7 @@ public class Names extends AppCompatActivity {
                     SharedPreferences preferences = getSharedPreferences("Info", MODE_PRIVATE);
                     int id = preferences.getInt("user_id", -1);
                     params.put("user_id", Integer.toString(id));
-                    params.put("className", className);
+                    params.put("material_id", materialId);
                     StringBuilder sbParams = new StringBuilder();
                     int i = 0;
                     for (String key : params.keySet()) {
@@ -95,7 +100,7 @@ public class Names extends AppCompatActivity {
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
                 try {
-                    loadIntoListView(s);
+                    loadIntoView(s);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -105,20 +110,21 @@ public class Names extends AppCompatActivity {
         getJSON.execute();
     }
 
-    private void loadIntoListView(String json) throws JSONException {
+    private void loadIntoView(String json) throws JSONException {
         JSONArray jsonArray = new JSONArray(json);
-        List<Map<String, String>> data = new ArrayList<Map<String, String>>();
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject obj = jsonArray.getJSONObject(i);
-            Map<String, String> datum = new HashMap<String, String>(2);
-            datum.put("Name", obj.getString("name"));
-            datum.put("Email", obj.getString("email"));
-            data.add(datum);
-        }
-        SimpleAdapter adapter = new SimpleAdapter(this, data,
-                android.R.layout.simple_list_item_2,
-                new String[] {"Name", "Email" },
-                new int[] {android.R.id.text1, android.R.id.text2 });
-        listView.setAdapter(adapter);
+        String titleInfo, authorInfo, typeInfo, urlInfo, assignedDateInfo, notesInfo;
+        JSONObject obj = jsonArray.getJSONObject(0);
+        titleInfo = obj.getString("title");
+        authorInfo = obj.getString("author");
+        typeInfo = obj.getString("type");
+        urlInfo = obj.getString("url");
+        assignedDateInfo = obj.getString("assigned_date");
+        notesInfo = obj.getString("notes");
+        title.setText(titleInfo);
+        author.setText(authorInfo);
+        type.setText(typeInfo);
+        url.setText(urlInfo);
+        assignedDate.setText(assignedDateInfo);
+        notes.setText(notesInfo);
     }
 }

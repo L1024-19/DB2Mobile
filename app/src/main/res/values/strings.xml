@@ -40,4 +40,5 @@
     <string name="enroll">Enroll</string>
     <string name="teach">Teach</string>
     <string name="viewMentor">View Mentor</string>
+    <string name="viewMentee">View Mentee</string>
 </resources>
