@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Materialinfo"></activity>
+        <activity android:name=".Delete"></activity>
+        <activity android:name=".Materialinfo" />
         <activity android:name=".Materials" />
         <activity android:name=".ViewMentee" />
         <activity android:name=".Names" />

@@ -2,43 +2,35 @@ package com.example.db2mobile;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ListView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
 import java.io.DataOutputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ViewMentee extends AppCompatActivity {
-
-    ListView listView;
+public class Delete extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_mentee);
-        listView = (ListView) findViewById(R.id.listView);
-        getJSON("http://192.168.0.21/DB2Mobile/php/MenteeList.php");
+        getJSON("http://192.168.0.21/DB2Mobile/php/DeleteClass.php");
     }
 
     private void getJSON(final String urlWebService) {
         class GetJSON extends AsyncTask<Void, Void, String> {
 
+            String className;
+
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
+                className = getIntent().getStringExtra("className");
             }
 
             @Override
@@ -47,6 +39,7 @@ public class ViewMentee extends AppCompatActivity {
                     URL url = new URL(urlWebService);
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     HashMap<String, String> params = new HashMap<>();
+                    params.put("className", className);
                     SharedPreferences preferences = getSharedPreferences("Info", MODE_PRIVATE);
                     int id = preferences.getInt("user_id", -1);
                     params.put("user_id", Integer.toString(id));
@@ -73,14 +66,11 @@ public class ViewMentee extends AppCompatActivity {
                     wr.writeBytes(paramsString);
                     wr.flush();
                     wr.close();
-                    StringBuilder sb = new StringBuilder();
-                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    String json;
-                    while ((json = bufferedReader.readLine()) != null) {
-                        sb.append(json + "\n");
-                    }
-                    return sb.toString().trim();
-                } catch (Exception e) {
+                    // runs the php code and gets JSON from it
+                    con.getInputStream();
+                    return "Success";
+                }
+                catch (Exception e) {
                     return null;
                 }
             }
@@ -88,27 +78,12 @@ public class ViewMentee extends AppCompatActivity {
             @Override
             protected void onPostExecute(String s) {
                 super.onPostExecute(s);
-                try {
-                    loadIntoListView(s);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                Intent next = new Intent(getApplicationContext(), StudentDashboard.class);
+                startActivity(next);
+                finish();
             }
         }
         GetJSON getJSON = new GetJSON();
         getJSON.execute();
-    }
-
-    private void loadIntoListView(String json) throws JSONException {
-        JSONArray jsonArray = new JSONArray(json);
-        ArrayList<String> list = new ArrayList<String>();
-        // instantiate custom adapter
-        MyCustomAdapter adapter = new MyCustomAdapter(list, this);
-        for (int i = 0; i < jsonArray.length(); i++) {
-            JSONObject obj = jsonArray.getJSONObject(i);
-            list.add(obj.getString("meet_name"));
-        }
-        // handle listView and assign adapter
-        listView.setAdapter(adapter);
     }
 }
