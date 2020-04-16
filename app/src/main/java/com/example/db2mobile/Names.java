@@ -34,7 +34,7 @@ public class Names extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_names);
         listView = (ListView) findViewById(R.id.listView);
-        getJSON("http://192.168.0.21/DB2Mobile/php/Names.php");
+        getJSON("http://10.0.0.234/db2/DB2Mobile/php/Names.php");
     }
 
     private void getJSON(final String urlWebService) {

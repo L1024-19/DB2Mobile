@@ -33,7 +33,7 @@ public class ViewMentor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_mentor);
         listView = (ListView) findViewById(R.id.listView);
-        getJSON("http://192.168.0.21/DB2Mobile/php/MentorList.php");
+        getJSON("http://10.0.0.234/db2/DB2Mobile/php/MentorList.php");
     }
 
     private void getJSON(final String urlWebService) {

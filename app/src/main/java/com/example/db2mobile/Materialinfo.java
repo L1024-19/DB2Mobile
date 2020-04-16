@@ -34,7 +34,7 @@ public class Materialinfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_materialinfo);
         materialId = getIntent().getStringExtra("material_id");
-        getJSON("http://192.168.0.21/DB2Mobile/php/MaterialInfo.php");
+        getJSON("http://10.0.0.234/db2/DB2Mobile/php/MaterialInfo.php");
     }
 
     private void getJSON(final String urlWebService) {

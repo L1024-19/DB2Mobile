@@ -33,7 +33,7 @@ public class StudentSection extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_section);
         listView = (ListView) findViewById(R.id.listView);
-        getJSON("http://192.168.0.21/DB2Mobile/php/StudentSection.php");
+        getJSON("http://10.0.0.234/db2/DB2Mobile/php/StudentSection.php");
     }
 
     private void getJSON(final String urlWebService) {

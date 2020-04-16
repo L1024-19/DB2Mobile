@@ -19,7 +19,7 @@ public class Enroll extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getJSON("http://192.168.0.21/DB2Mobile/php/Enroll.php");
+        getJSON("http://10.0.0.234/db2/DB2Mobile/php/Enroll.php");
     }
 
     private void getJSON(final String urlWebService) {

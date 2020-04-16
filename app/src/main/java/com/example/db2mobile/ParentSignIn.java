@@ -35,7 +35,7 @@ public class ParentSignIn extends AppCompatActivity {
         submit = (Button) findViewById(R.id.submit);
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getJSON("http://192.168.0.21/DB2Mobile/php/ParentSignIn.php");
+                getJSON("http://10.0.0.234/db2/DB2Mobile/php/ParentSignIn.php");
             }
         });
     }

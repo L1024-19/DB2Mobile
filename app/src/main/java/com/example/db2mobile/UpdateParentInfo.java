@@ -30,7 +30,7 @@ public class UpdateParentInfo extends AppCompatActivity {
         submit = (Button) findViewById(R.id.updateParentInfo);
         submit.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                getJSON("http://192.168.0.21/DB2Mobile/php/UpdateParentInfo.php");
+                getJSON("http://10.0.0.234/db2/DB2Mobile/php/UpdateParentInfo.php");
             }
         });
     }
